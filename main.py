@@ -1,7 +1,39 @@
 import streamlit as st
+import base64
+from pathlib import Path
+
+
 st.set_page_config(page_title="Fuel Price Calculator",page_icon="📃",layout="centered")
 st.title("Fuel Price Calculator")
-st.markdown("Enter The Details to Get Your Fuel Cost")
+
+def get_base64_of_bin_file(bin_file):
+    with open(bin_file, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+# Get the base64 string of an image
+def get_img_with_href(local_img_path):
+    img_format = local_img_path.suffix[1:]
+    bin_str = get_base64_of_bin_file(local_img_path)
+    return f"data:image/{img_format};base64,{bin_str}"
+
+# Path to your image
+image_path = Path("../Samples/fuelPump.jpg").resolve()
+background_image = get_img_with_href(image_path)
+
+st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url("{background_image}");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 with st.form("Fuel Calculator"):
     st.subheader("Trip Details")

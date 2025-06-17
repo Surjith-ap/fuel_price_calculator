@@ -18,7 +18,7 @@ def get_img_with_href(local_img_path):
     return f"data:image/{img_format};base64,{bin_str}"
 
 # Path to your image
-image_path = Path("../Samples/fuelPump.jpg").resolve()
+image_path = Path("../assets/fuelPump.jpg").resolve()
 background_image = get_img_with_href(image_path)
 
 st.markdown(
